@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Library - E-Library</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+        }
+
+        /* Header Section */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #f9f9f9;
+            padding: 10px 20px;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Logo */
+        .logo img {
+            width: 160px;
+            height: auto;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            gap: 15px;
+        }
+        nav a {
+            text-decoration: none;
+            color: black;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        nav a:hover {
+            background-color: #34495e;
+            color: white;
+        }
+        .library {
+            background-color: white;
+            color: black;
+        }
+
+        /* Search Bar */
+        .search-bar {
+            display: flex;
+            align-items: center;
+        }
+        .search-bar input {
+            padding: 10px;
+            border: 2px solid #ccc;
+            border-radius: 5px 0 0 5px;
+            outline: none;
+            width: 200px;
+        }
+        .search-bar button {
+            padding: 10px;
+            background-color: #34495e;
+            color: white;
+            border: none;
+            border-radius: 0 5px 5px 0;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .search-bar button:hover {
+            background-color: #2c3e50;
+        }
+
+        .library-container {
+            margin: 20px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        .library-container h2 {
+            color: #2c3e50;
+        }
+        .book-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .book-item {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 150px;
+        }
+        .book-item img {
+            width: 100px;
+            height: 140px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        .book-item p {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="/static/images/logo.png" alt="E-Library Logo">
+        </div>
+        <nav>
+            <a href="/home">Home</a>
+            <a href="/about">About</a>
+            <a href="#" class="library">My Library</a>
+            <a href="/feedback">Feedback</a>
+            <a href="/contact">Contact Us</a>
+            <a href="/logout">Logout</a>
+        </nav>
+    </header>
+
+    <div class="library-container">
+        <h2>Upload a Book</h2>
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+            <input type="file" name="book" accept=".pdf,.epub" required>
+            <button type="submit">Upload</button>
+        </form>
+    </div>
+
+    <div class="library-container">
+        <h2>Downloaded Books</h2>
+        <div class="book-list" id="downloaded-books">
+            <!-- Downloaded books will be listed here -->
+        </div>
+    </div>
+
+    <div class="library-container">
+        <h2>Uploaded Books</h2>
+        <div class="book-list" id="uploaded-books">
+            <!-- Uploaded books will be listed here -->
+        </div>
+    </div>
+
+    <script>
+        function search() {
+            const query = document.querySelector('.search-bar input').value;
+            alert(query ? `Searching for: ${query}` : 'Please enter a search term.');
+        }
+    </script>
+</body>
+</html>

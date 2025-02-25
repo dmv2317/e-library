@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: #0b132b;
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+        .container {
+            position: relative;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 350px;
+            backdrop-filter: blur(10px);
+            animation: fadeIn 1s ease-in-out;
+        }
+        .container h2 {
+            color: #00d9ff;
+        }
+        .ring {
+            position: absolute;
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            border: 5px solid rgba(0, 217, 255, 0.3);
+            animation: spin 5s linear infinite;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        input::placeholder {
+            color: #ddd;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #00d9ff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover { background: #00a6d6; }
+
+        /* Animated Background */
+        .book {
+            position: absolute;
+            width: 100px;
+            height: 120px;
+            background: #ff9a9e;
+            border-radius: 10px;
+            transform: rotate(-20deg);
+            animation: bookSlide 5s infinite linear;
+        }
+        .book:nth-child(2) {
+            left: 20%;
+            animation-duration: 6s;
+            background: #fad0c4;
+        }
+        .book:nth-child(3) {
+            left: 40%;
+            animation-duration: 7s;
+            background: #fbc2eb;
+        }
+        .book:nth-child(4) {
+            left: 60%;
+            animation-duration: 8s;
+            background: #a1c4fd;
+        }
+        .book:nth-child(5) {
+            left: 80%;
+            animation-duration: 9s;
+            background: #c2e9fb;
+        }
+        @keyframes bookSlide {
+            0% { top: -10%; opacity: 1; }
+            100% { top: 110%; opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="book"></div>
+    <div class="book"></div>
+    <div class="book"></div>
+    <div class="book"></div>
+    <div class="book"></div>
+    <div class="container">
+        <h2>Register</h2>
+        
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <p class="flash {{ category }}">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <input type="text" name="username" placeholder="Username" required>
+            <input type="email" name="email" placeholder="Email" required>
+            <input type="password" name="password" placeholder="Password" required>
+            <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+            <button type="submit">Register</button>
+        </form>
+
+        <p>Already have an account? <a href="{{ url_for('login') }}" style="color: #00d9ff;">Login</a></p>
+    </div>
+
+    <script>
+        document.querySelector("form").addEventListener("submit", function(event) {
+            let password = document.querySelector("input[name='password']").value;
+            let confirmPassword = document.querySelector("input[name='confirm_password']").value;
+            let error = "";
+
+            if (password.length < 8) {
+                error = "Password must be at least 8 characters.";
+            } else if (!/[A-Z]/.test(password)) {
+                error = "Password must contain at least one uppercase letter.";
+            } else if (!/[0-9]/.test(password)) {
+                error = "Password must contain at least one number.";
+            } else if (password !== confirmPassword) {
+                error = "Passwords do not match.";
+            }
+
+            if (error) {
+                event.preventDefault();
+                alert(error);
+            }
+        });
+    </script>
+</body>
+</html>
